@@ -1,7 +1,63 @@
+import { useState } from "react";
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    work: "",
+    password: "",
+    cpassword: "",
+  });
+
+  const handlechange = (e) => {
+    // console.log(e.target.value);
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const PostData = async (e) => {
+    e.preventDefault();
+    const { name, email, phone, work, password, cpassword } = user;
+
+    try {
+      const res = await fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          work,
+          password,
+          cpassword,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      if (data.status === 422 || !data) {
+        window.alert("Invalid Registration");
+        console.log("Invalid Registration");
+      } else {
+        window.alert("Registration Successful");
+        console.log("Registration Successful");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Error during fetch:", error);
+    }
+  };
+
   return (
     <section className="vh-120" style={{ backgroundColor: "#eee" }}>
       <div className="container h-100">
@@ -18,7 +74,7 @@ function Signup() {
                       Sign up
                     </p>
 
-                    <form className="mx-1 mx-md-4">
+                    <form method="post" className="mx-1 mx-md-4">
                       <div className="d-flex flex-row align-items-center mb-1">
                         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
@@ -27,6 +83,8 @@ function Signup() {
                             name="name"
                             id="name"
                             className="form-control"
+                            value={user.name}
+                            onChange={handlechange}
                             // placeholder="Your Name"
                           />
                           <label className="form-label" htmlFor="name">
@@ -43,6 +101,8 @@ function Signup() {
                             name="email"
                             id="email"
                             className="form-control"
+                            value={user.email}
+                            onChange={handlechange}
                             // placeholder="Your Email"
                           />
                           <label className="form-label" htmlFor="email">
@@ -59,6 +119,8 @@ function Signup() {
                             name="phone"
                             id="phone"
                             className="form-control"
+                            value={user.number}
+                            onChange={handlechange}
                             // placeholder="Your Phone Number"
                           />
                           <label className="form-label" htmlFor="phone">
@@ -75,6 +137,8 @@ function Signup() {
                             name="work"
                             id="work"
                             className="form-control"
+                            value={user.work}
+                            onChange={handlechange}
                             // placeholder="Your Profession"
                           />
                           <label className="form-label" htmlFor="work">
@@ -91,6 +155,8 @@ function Signup() {
                             name="password"
                             id="password"
                             className="form-control"
+                            value={user.password}
+                            onChange={handlechange}
                             // placeholder="Your Password"
                           />
                           <label className="form-label" htmlFor="password">
@@ -107,6 +173,8 @@ function Signup() {
                             name="cpassword"
                             id="cpassword"
                             className="form-control"
+                            value={user.cpassword}
+                            onChange={handlechange}
                             // placeholder="Your Confirm Password"
                           />
                           <label className="form-label" htmlFor="cpassword">

@@ -6,6 +6,7 @@ import Contacts from "./components/Contacts";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Navbar from "./components/Navbar"; // Import the Navbar component
+import Errorpage from "./components/Errorpage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/contact" element={<Contacts />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="*" element={<Errorpage />} />
       </Routes>
     </div>
   );

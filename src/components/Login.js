@@ -71,7 +71,7 @@ function Login() {
                     {/* ........ */}
 
                     <div style={{ textAlign: "center" }}>
-                      <NavLink to={"/login"}>
+                      <NavLink to={"/signup"}>
                         {" "}
                         <span style={{ color: "red" }}>I am New User</span>
                       </NavLink>
