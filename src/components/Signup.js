@@ -27,7 +27,7 @@ function Signup() {
     try {
       const res = await fetch("/signup", {
         method: "POST",
-        headers: {
+        header: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -115,7 +115,7 @@ function Signup() {
                         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
                           <input
-                            type="number"
+                            type="text"
                             name="phone"
                             id="phone"
                             className="form-control"
@@ -183,7 +183,7 @@ function Signup() {
                         </div>
                       </div>
 
-                      <div className="form-check d-flex justify-content-center mb-5">
+                      {/* <div className="form-check d-flex justify-content-center mb-5">
                         <input
                           className="form-check-input me-2"
                           type="checkbox"
@@ -197,7 +197,7 @@ function Signup() {
                           I agree all statements in{" "}
                           <a href="#!">Terms of service</a>
                         </label>
-                      </div>
+                      </div> */}
 
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <button
