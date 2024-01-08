@@ -27,7 +27,7 @@ function Signup() {
     try {
       const res = await fetch("/signup", {
         method: "POST",
-        header: {
+        headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -119,7 +119,7 @@ function Signup() {
                             name="phone"
                             id="phone"
                             className="form-control"
-                            value={user.number}
+                            value={user.phone}
                             onChange={handlechange}
                             // placeholder="Your Phone Number"
                           />
@@ -202,10 +202,11 @@ function Signup() {
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <button
                           type="submit"
-                          name="signup"
+                          // name="signup"
                           id="signup"
-                          value="register"
+                          // value="register"
                           className="btn btn-primary btn-lg"
+                          onClick={PostData}
                         >
                           Register
                         </button>

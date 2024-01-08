@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Yoga from "../Images/Yoga.jpg";
 import Userdetails from "./Userdetails";
 import Userdetails_2 from "./Userdetails_2";
+import { useNavigate } from "react-router-dom";
 
 function About() {
+  const navigate = useNavigate();
+
   const [Userinfo, setUserinfo] = useState(true);
 
   const handleclick = (option) => {
@@ -14,8 +17,35 @@ function About() {
     }
   };
 
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/about", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await res.json();
+      console.log(data);
+
+      if (res.status !== 200) {
+        const error = new Error(res.error);
+        throw error;
+      }
+    } catch (error) {
+      console.log("error");
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    callAboutPage();
+  }, []);
+
   return (
-    <div className="AboutSection-1">
+    <form method="GET" className="AboutSection-1">
       <div className="AboutSection-2">
         <div className="ImageSection-1">
           <img className="image" src={Yoga} alt="Photo" />
@@ -54,7 +84,7 @@ function About() {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 

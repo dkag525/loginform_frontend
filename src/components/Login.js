@@ -1,7 +1,36 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+    const data = res.json();
+
+    if (res.status === 400 || !data) {
+      window.alert("Invalid Credentials");
+      console.log("Invalid Credentials");
+    } else {
+      window.alert("Login Successfull");
+      navigate("/");
+    }
+  };
+
   return (
     <section className="vh-100" style={{ backgroundColor: "#eee" }}>
       <div className="container h-100">
@@ -18,7 +47,7 @@ function Login() {
                       Log In
                     </p>
 
-                    <form className="mx-1 mx-md-4">
+                    <form method="POST" className="mx-1 mx-md-4">
                       {/* .............. */}
 
                       <div className="d-flex flex-row align-items-center mb-1">
@@ -27,8 +56,10 @@ function Login() {
                           <input
                             type="email"
                             name="email"
+                            value={email}
                             id="email"
                             className="form-control"
+                            onChange={(e) => setEmail(e.target.value)}
                             // placeholder="Your Email"
                           />
                           <label className="form-label" htmlFor="email">
@@ -45,8 +76,10 @@ function Login() {
                           <input
                             type="password"
                             name="password"
+                            value={password}
                             id="password"
                             className="form-control"
+                            onChange={(e) => setPassword(e.target.value)}
                             // placeholder="Your Password"
                           />
                           <label className="form-label" htmlFor="password">
@@ -61,10 +94,10 @@ function Login() {
                           type="submit"
                           name="signin"
                           id="signin"
-                          value="login"
+                          onClick={loginUser}
                           className="btn btn-primary btn-lg"
                         >
-                          Register
+                          Login
                         </button>
                       </div>
                     </form>
