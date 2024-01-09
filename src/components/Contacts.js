@@ -4,7 +4,12 @@ import { useNavigate } from "react-router-dom";
 function Contacts() {
   const navigate = useNavigate();
 
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
 
   const userContact = async () => {
     try {
@@ -16,7 +21,12 @@ function Contacts() {
       });
       const data = await res.json();
       console.log("Contact Data", data);
-      setUserData(data);
+      setUserData({
+        ...userData,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+      });
 
       if (res.status !== 200) {
         const error = new Error(res.error);
@@ -31,6 +41,12 @@ function Contacts() {
   useEffect(() => {
     userContact();
   }, []);
+
+  const handleInput = (e) => {
+    const [name, value] = e.target;
+
+    setUserData({ ...userData, [name]: value });
+  };
 
   return (
     <div
@@ -71,6 +87,7 @@ function Contacts() {
                       required="true"
                       placeholder="Name"
                       value={userData.name}
+                      onChange={handleInput}
                     />
                     <label for="name" className="">
                       Your name
@@ -88,6 +105,7 @@ function Contacts() {
                       required="true"
                       placeholder="Type Your Email"
                       value={userData.email}
+                      onChange={handleInput}
                     />
                     <label for="email" className="">
                       Your email
@@ -102,11 +120,12 @@ function Contacts() {
                     <input
                       type="number"
                       id="number"
-                      name="number"
+                      name="phone"
                       className="form-control"
                       placeholder="Phone Number"
                       required="true"
                       value={userData.phone}
+                      onChange={handleInput}
                     />
                     <label for="phone" className="">
                       Phone Number
@@ -125,6 +144,8 @@ function Contacts() {
                       rows="3"
                       className="form-control md-textarea"
                       placeholder="Pls Type Your Msg"
+                      value={userData.message}
+                      onChange={handleInput}
                     ></textarea>
                     <label for="message">Your message</label>
                   </div>
