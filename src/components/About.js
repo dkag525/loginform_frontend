@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 function About() {
   const navigate = useNavigate();
 
+  const [userData, setUserData] = useState();
+
   const [Userinfo, setUserinfo] = useState(true);
 
   const handleclick = (option) => {
@@ -28,7 +30,7 @@ function About() {
         credentials: "include",
       });
       const data = await res.json();
-      console.log(data);
+      setUserData(data);
 
       if (res.status !== 200) {
         const error = new Error(res.error);
@@ -36,7 +38,7 @@ function About() {
       }
     } catch (error) {
       console.log("error");
-      navigate("/login");
+      navigate("/signin");
     }
   };
 
@@ -49,9 +51,9 @@ function About() {
       <div className="AboutSection-2">
         <div className="ImageSection-1">
           <img className="image" src={Yoga} alt="Photo" />
-          <p>Name: Deepak</p>
-          <p>Work: Devlopment</p>
-          <p>Profession: Website</p>
+          <p>{userData?.name}</p>
+          <p>{userData?.work}</p>
+          <p>{userData?.phone} </p>
           <p>Social: Instagram</p>
           <p>Eng: Soft. Eng.</p>
         </div>
@@ -80,7 +82,13 @@ function About() {
               <h3 onClick={() => handleclick("About")}>About</h3>
               <h3 onClick={() => handleclick("Timeline")}>Timeline</h3>
             </div>
-            <div>{Userinfo === true ? <Userdetails /> : <Userdetails_2 />}</div>
+            <div>
+              {Userinfo === true ? (
+                <Userdetails userData={userData} />
+              ) : (
+                <Userdetails_2 userData={userData} />
+              )}
+            </div>
           </div>
         </div>
       </div>

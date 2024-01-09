@@ -21,6 +21,9 @@ function Login() {
       }),
     });
     const data = res.json();
+    // data.then((response) => {
+    //   console.log(response);
+    // });
 
     if (res.status === 400 || !data) {
       window.alert("Invalid Credentials");
@@ -115,7 +118,7 @@ function Login() {
                     <img
                       src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
                       className="img-fluid"
-                      alt="Sample image"
+                      alt="Registration_Illustration"
                     />
                   </div>
                 </div>

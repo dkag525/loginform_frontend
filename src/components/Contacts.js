@@ -1,6 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Contacts() {
+  const navigate = useNavigate();
+
+  const [userData, setUserData] = useState({});
+
+  const userContact = async () => {
+    try {
+      const res = await fetch("/getdata", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      console.log("Contact Data", data);
+      setUserData(data);
+
+      if (res.status !== 200) {
+        const error = new Error(res.error);
+        throw error;
+      }
+    } catch (error) {
+      console.log("error");
+      navigate("/signin");
+    }
+  };
+
+  useEffect(() => {
+    userContact();
+  }, []);
+
   return (
     <div
       style={{
@@ -39,6 +70,7 @@ function Contacts() {
                       className="form-control"
                       required="true"
                       placeholder="Name"
+                      value={userData.name}
                     />
                     <label for="name" className="">
                       Your name
@@ -55,6 +87,7 @@ function Contacts() {
                       className="form-control"
                       required="true"
                       placeholder="Type Your Email"
+                      value={userData.email}
                     />
                     <label for="email" className="">
                       Your email
@@ -73,6 +106,7 @@ function Contacts() {
                       className="form-control"
                       placeholder="Phone Number"
                       required="true"
+                      value={userData.phone}
                     />
                     <label for="phone" className="">
                       Phone Number
@@ -127,12 +161,12 @@ function Contacts() {
 
               <li>
                 <i className="fas fa-phone mt-4 fa-2x"></i>
-                <p>9876543210</p>
+                <p>{userData.phone}</p>
               </li>
 
               <li>
                 <i className="fas fa-envelope mt-4 fa-2x"></i>
-                <p>contact@mdbootstrap.com</p>
+                <p>{userData.email}</p>
               </li>
             </ul>
           </div>

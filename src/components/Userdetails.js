@@ -1,6 +1,6 @@
 import React from "react";
 
-function Userdetails() {
+function Userdetails(props) {
   return (
     <>
       <div className="Citem item4">
@@ -25,11 +25,11 @@ function Userdetails() {
           }}
         >
           {" "}
-          <p>123456789</p>
-          <p>Deepak</p>
-          <p>abcd@gmail.com</p>
+          <p>{props.userData?._id}</p>
+          <p>{props.userData?.name}</p>
+          <p>{props.userData?.email}</p>
           <p>9876543210</p>
-          <p>Web Devloper</p>
+          <p>{props.userData?.work}</p>
         </div>
       </div>
     </>

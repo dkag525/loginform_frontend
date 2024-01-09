@@ -1,6 +1,6 @@
 import React from "react";
 
-function Userdetails_2() {
+function Userdetails_2(props) {
   return (
     <>
       <div className="Citem item4">
@@ -27,8 +27,8 @@ function Userdetails_2() {
           {" "}
           <p>yes</p>
           <p>facebook.com</p>
-          <p>yes</p>
-          <p>yes</p>
+          <p>{props.userData?.email}</p>
+          <p>{props.userData?.phone}</p>
           <p>Web Devloper</p>
         </div>
       </div>
