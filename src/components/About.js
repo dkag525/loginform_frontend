@@ -50,7 +50,7 @@ function About() {
     <form method="GET" className="AboutSection-1">
       <div className="AboutSection-2">
         <div className="ImageSection-1">
-          <img className="image" src={Yoga} alt="Photo" />
+          <img className="image" src={Yoga} alt="yoga_img" />
           <p>{userData?.name}</p>
           <p>{userData?.work}</p>
           <p>{userData?.phone} </p>

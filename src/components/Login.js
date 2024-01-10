@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 function Login() {
@@ -30,6 +30,8 @@ function Login() {
       console.log("Invalid Credentials");
     } else {
       window.alert("Login Successfull");
+      sessionStorage.setItem("USER", "LogIn");
+      window.location.reload();
       navigate("/");
     }
   };

@@ -213,7 +213,7 @@ function Signup() {
                       </div>
                     </form>
                     <div style={{ textAlign: "center" }}>
-                      <NavLink to={"/login"}>
+                      <NavLink to={"/signin"}>
                         {" "}
                         <span style={{ color: "red" }}>
                           I am Already Register

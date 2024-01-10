@@ -26,6 +26,7 @@ function Contacts() {
         name: data.name,
         email: data.email,
         phone: data.phone,
+        message: "",
       });
 
       if (res.status !== 200) {
@@ -43,9 +44,36 @@ function Contacts() {
   }, []);
 
   const handleInput = (e) => {
-    const [name, value] = e.target;
-
+    console.log(e);
+    const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
+  };
+
+  const contactForm = async (e) => {
+    e.preventDefault();
+
+    const { name, email, phone, message } = userData;
+
+    const res = await fetch("/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        message,
+      }),
+    });
+    const data = await res.json();
+
+    if (!data) {
+      console.log("message not sending");
+    } else {
+      alert("message Send");
+      setUserData({ ...userData, message: "" });
+    }
   };
 
   return (
@@ -166,6 +194,7 @@ function Contacts() {
                 name="submit"
                 id="submit"
                 className="btn btn-primary"
+                onClick={contactForm}
               >
                 Send
               </button>
